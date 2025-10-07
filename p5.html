@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Indian Time Digital Clock</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: #282c34;
+    color: #61dafb;
+    font-size: 3rem;
+  }
+  #clock {
+    background: #20232a;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #61dafb;
+  }
+</style>
+</head>
+<body>
+  <div id="clock">Loading...</div>
+
+  <script>
+    function updateClock() {
+      const nowUTC = new Date();
+
+      // Calculate IST time by adding 5 hours 30 minutes
+      const IST_OFFSET = 5 * 60 + 30; // minutes
+      const nowIST = new Date(nowUTC.getTime() + IST_OFFSET * 60000);
+
+      let hours = nowIST.getHours();
+      let minutes = nowIST.getMinutes();
+      let seconds = nowIST.getSeconds();
+
+      // Format time with leading zeros
+      hours = hours < 10 ? '0' + hours : hours;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+
+      // Format time string
+      const timeString = `${hours}:${minutes}:${seconds}`;
+
+      document.getElementById('clock').textContent = timeString;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // initial call
+  </script>
+</body>
+</html>
