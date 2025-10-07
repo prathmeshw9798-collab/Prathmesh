@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instagram Home</title>
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background: #fafafa;
+      color: #262626;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #dbdbdb;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+      height: 60px;
+    }
+
+    .logo {
+      font-family: 'Grand Hotel', cursive;
+      font-size: 36px;
+      color: #262626;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      font-weight: 600;
+      font-size: 14px;
+      align-items: center;
+    }
+
+    nav a {
+      color: #262626;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      color: #0095f6;
+    }
+
+    main {
+      max-width: 935px;
+      margin: 80px auto 40px;
+      display: flex;
+      gap: 28px;
+      padding: 0 20px;
+    }
+
+    /* Feed */
+    .feed {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .post {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      padding: 14px;
+    }
+
+    .post-header img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+
+    .post-header .username {
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .post-image {
+      width: 100%;
+      max-height: 600px;
+      object-fit: cover;
+      background: #efefef;
+    }
+
+    .post-actions {
+      padding: 8px 14px;
+      display: flex;
+      gap: 12px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .post-actions span {
+      user-select: none;
+    }
+
+    .post-likes {
+      font-weight: 600;
+      padding: 0 14px 10px;
+      font-size: 14px;
+    }
+
+    .post-caption {
+      padding: 0 14px 14px;
+      font-size: 14px;
+    }
+
+    /* Sidebar */
+    aside.sidebar {
+      flex: 1;
+      position: sticky;
+      top: 80px;
+      height: fit-content;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      padding: 10px 14px;
+      border-radius: 3px;
+    }
+
+    .user-info img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      margin-right: 14px;
+    }
+
+    .user-info .details {
+      flex: 1;
+    }
+
+    .user-info .details .username {
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .user-info .details .fullname {
+      color: #8e8e8e;
+      font-size: 14px;
+    }
+
+    .user-info button {
+      background: none;
+      border: none;
+      color: #0095f6;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .stories {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      padding: 12px 14px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+
+    .stories-header {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .stories-list {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+
+    .story {
+      flex: 0 0 auto;
+      text-align: center;
+      cursor: pointer;
+      width: 60px;
+    }
+
+    .story img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid #c13584;
+      object-fit: cover;
+    }
+
+    .story .username {
+      font-size: 12px;
+      margin-top: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Scrollbar for stories */
+    .stories-list::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .stories-list::-webkit-scrollbar-thumb {
+      background-color: #dbdbdb;
+      border-radius: 3px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      main {
+        flex-direction: column;
+        max-width: 100%;
+      }
+      aside.sidebar {
+        position: static;
+        margin-top: 30px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <div class="logo">Instagram</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Direct</a>
+      <a href="#">Explore</a>
+      <a href="#">Notifications</a>
+      <a href="#">Profile</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="feed">
+      <article class="post">
+        <div class="post-header">
+          <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="user profile" />
+          <div class="username">jane_doe</div>
+        </div>
+        <img
+          class="post-image"
+          src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80"
+          alt="Post image"
+        />
+        <div class="post-actions">
+          <span>❤️</span>
+          <span>💬</span>
+          <span>🔗</span>
+        </div>
+        <div class="post-likes">Liked by <strong>alex</strong> and <strong>others</strong></div>
+        <div class="post-caption">
+          <strong>jane_doe</strong> Loving this view! #nature #photography
+        </div>
+      </article>
+
+      <article class="post">
+        <div class="post-header">
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="user profile" />
+          <div class="username">john_smith</div>
+        </div>
+        <img
+          class="post-image"
+          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+          alt="Post image"
+        />
+        <div class="post-actions">
+          <span>❤️</span>
+          <span>💬</span>
+          <span>🔗</span>
+        </div>
+        <div class="post-likes">Liked by <strong>emily</strong> and <strong>others</strong></div>
+        <div class="post-caption">
+          <strong>john_smith</strong> Sunset vibes 🌅
+        </div>
+      </article>
+    </section>
+
+    <aside class="sidebar">
+      <div class="user-info">
+        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Profile Picture" />
+        <div class="details">
+          <div class="username">your_username</div>
+          <div class="fullname">Your Name</div>
+        </div>
+        <button>Switch</button>
+      </div>
+
+      <div class="stories">
+        <div class="stories-header">
+          <span>Stories</span>
+          <a href="#" style="color:#0095f6; font-weight: 600; font-size: 12px; text-decoration: none;">See All</a>
+        </div>
+        <div class="stories-list">
+          <div class="story">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="story user" />
+            <div class="username">anna</div>
+          </div>
+          <div class="story">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="story user" />
+            <div class="username">mike</div>
+          </div>
+          <div class="story">
+            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="story user" />
+            <div class="username">lisa</div>
+          </div>
+          <div class="story">
+            <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="story user" />
+            <div class="username">dan</div>
+          </div>
+          <div class="story">
+            <img src="https://randomuser.me/api/portraits/women/20.jpg" alt="story user" />
+            <div class="username">nina</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>
