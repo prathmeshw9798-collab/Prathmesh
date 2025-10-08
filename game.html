@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dinosaur Game</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: sans-serif;
+      background-color: #f4f4f4;
+    }
+    .game {
+      width: 800px;
+      height: 200px;
+      border: 2px solid #333;
+      margin: 50px auto;
+      position: relative;
+      background-color: white;
+      overflow: hidden;
+      user-select: none;
+    }
+    .dino {
+      width: 40px;
+      height: 40px;
+      background-color: #333;
+      position: absolute;
+      bottom: 0;
+      left: 50px;
+    }
+    .cactus {
+      width: 20px;
+      height: 40px;
+      background-color: green;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+    .jump {
+      animation: jump 0.4s linear;
+    }
+    @keyframes jump {
+      0% { bottom: 0; }
+      50% { bottom: 100px; }
+      200% { bottom: 0; }
+    }
+    .score {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <div class="dino" id="dino"></div>
+    <div class="cactus" id="cactus"></div>
+    <div class="score" id="score">Score: 0</div>
+  </div>
+
+  <script>
+    const dino = document.getElementById("dino");
+    const cactus = document.getElementById("cactus");
+    const scoreElement = document.getElementById("score");
+
+    let cactusPosition = 800;
+    let score = 0;
+    let gameOver = false;
+
+    // Jumping
+    document.addEventListener("keydown", function(event) {
+      if ((event.code === "Space" || event.code === "ArrowUp") && !gameOver) {
+        if (!dino.classList.contains("jump")) {
+          dino.classList.add("jump");
+          setTimeout(() => {
+            dino.classList.remove("jump");
+          }, 400);
+        }
+      }
+    });
+
+    function moveCactus() {
+      if (gameOver) return;
+
+      cactusPosition -= 5;
+      if (cactusPosition < -20) {
+        cactusPosition = 800 + Math.random() * 400; // random respawn
+      }
+      cactus.style.right = `${800 - cactusPosition}px`;
+
+      // Collision Detection
+      let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("bottom"));
+      if (cactusPosition < 90 && cactusPosition > 50 && dinoTop < 40) {
+        gameOver = true;
+        //alert("Game Over! Your score: " + score);
+        window.location.reload();
+      }
+
+      // Increase score
+      score++;
+      scoreElement.textContent = "Score: " + score;
+    }
+
+    setInterval(moveCactus, 20); // 50fps
+  </script>
+</body>
+</html>
